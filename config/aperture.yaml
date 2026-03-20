@@ -1,0 +1,94 @@
+# Aperture L402 Reverse Proxy Configuration
+# Sits in front of our API endpoints and handles Lightning payments
+
+# Listen address for incoming requests
+listenaddr: "0.0.0.0:8443"
+
+# Debug level
+debuglevel: "info"
+
+# LND connection
+authenticator:
+  lndhost: "localhost:10009"
+  tlspath: "/Users/velocibot/Library/Application Support/Lnd/tls.cert"
+  macdir: "/Users/velocibot/Library/Application Support/Lnd/data/chain/bitcoin/mainnet"
+  network: "mainnet"
+
+# SQLite database for macaroons/sessions
+dbbackend: "sqlite"
+sqlite:
+  dbfile: "/Users/Shared/openclaw/l402-apis/config/aperture.db"
+
+# Services behind the paywall
+services:
+  # Sanctions screening - 10 sats
+  - name: "sanctions"
+    hostregexp: ".*"
+    pathregexp: "/api/v1/sanctions/.*"
+    address: "localhost:9090"
+    protocol: "http"
+    price: 10
+
+  # Company search - 10 sats
+  - name: "company"
+    hostregexp: ".*"
+    pathregexp: "/api/v1/company/search.*"
+    address: "localhost:9090"
+    protocol: "http"
+    price: 10
+
+  # Marine weather - 5 sats
+  - name: "marine-weather"
+    hostregexp: ".*"
+    pathregexp: "/api/v1/weather/.*"
+    address: "localhost:9090"
+    protocol: "http"
+    price: 5
+
+  # Prediction weather - 5 sats
+  - name: "predictions"
+    hostregexp: ".*"
+    pathregexp: "/api/v1/predictions/.*"
+    address: "localhost:9090"
+    protocol: "http"
+    price: 5
+
+  # Crypto data - 2 sats
+  - name: "crypto"
+    hostregexp: ".*"
+    pathregexp: "/api/v1/crypto/.*"
+    address: "localhost:9090"
+    protocol: "http"
+    price: 2
+
+  # Domain/WHOIS - 5 sats
+  - name: "domain"
+    hostregexp: ".*"
+    pathregexp: "/api/v1/domain/.*"
+    address: "localhost:9090"
+    protocol: "http"
+    price: 5
+
+  # LLM inference - 100 sats base (actual token cost shown in response)
+  - name: "llm-inference"
+    hostregexp: ".*"
+    pathregexp: "/api/v1/llm/(chat|generate).*"
+    address: "localhost:9090"
+    protocol: "http"
+    price: 100
+
+  # Free endpoints - no paywall (price 0)
+  - name: "free-endpoints"
+    hostregexp: ".*"
+    pathregexp: "/api/v1/(health|pricing|llm/models|company/(states|jurisdictions)).*"
+    address: "localhost:9090"
+    protocol: "http"
+    price: 0
+
+  # Landing page, docs, OpenAPI spec - free
+  - name: "public-pages"
+    hostregexp: ".*"
+    pathregexp: "/(docs|openapi\\.json|landing)?$"
+    address: "localhost:9090"
+    protocol: "http"
+    price: 0

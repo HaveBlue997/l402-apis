@@ -1,0 +1,25 @@
+FROM ollama/ollama:latest
+
+# Create non-root user for running Ollama
+RUN groupadd -r ollama && useradd -r -g ollama -d /home/ollama -s /bin/false ollama
+
+# Create directories Ollama needs and set ownership
+RUN mkdir -p /home/ollama/.ollama /tmp/ollama && \
+    chown -R ollama:ollama /home/ollama /tmp/ollama
+
+# Model cache lives in a named volume mounted at /home/ollama/.ollama
+VOLUME /home/ollama/.ollama
+
+ENV OLLAMA_HOST=0.0.0.0:11434
+ENV OLLAMA_MODELS=/home/ollama/.ollama/models
+ENV HOME=/home/ollama
+
+EXPOSE 11434
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:11434/ || exit 1
+
+USER ollama
+
+ENTRYPOINT ["/bin/ollama"]
+CMD ["serve"]

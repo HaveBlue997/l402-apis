@@ -1,0 +1,54 @@
+services:
+  ollama:
+    build:
+      context: .
+      dockerfile: Dockerfile.ollama
+    container_name: openclaw-ollama
+    restart: unless-stopped
+
+    # Resource limits — 64GB RAM, 16 CPUs (half of M4 Ultra's 32 cores)
+    deploy:
+      resources:
+        limits:
+          memory: 64g
+          cpus: "16"
+        reservations:
+          memory: 8g
+          cpus: "4"
+
+    # Only expose to localhost — no external access
+    ports:
+      - "127.0.0.1:11434:11434"
+
+    # Named volume for model storage (not a bind mount)
+    volumes:
+      - ollama_models:/home/ollama/.ollama
+
+    # Security hardening
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    read_only: true
+    tmpfs:
+      - /tmp:size=4g
+
+    # Internal-only network
+    networks:
+      - ollama_internal
+
+    environment:
+      - OLLAMA_HOST=0.0.0.0:11434
+      - OLLAMA_MODELS=/home/ollama/.ollama/models
+      # Limit parallel requests to control resource usage
+      - OLLAMA_MAX_LOADED_MODELS=2
+      - OLLAMA_NUM_PARALLEL=4
+
+networks:
+  ollama_internal:
+    driver: bridge
+    internal: true
+
+volumes:
+  ollama_models:
+    name: openclaw-ollama-models

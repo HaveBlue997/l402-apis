@@ -1,0 +1,35 @@
+{
+  "name": "@openclaw/l402-agent-api",
+  "version": "1.0.0",
+  "description": "L402-paywalled API server providing sanctions screening, company search, and marine weather data for AI agents",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test src/**/*.test.js",
+    "mcp": "node src/mcp-server.js"
+  },
+  "keywords": [
+    "l402",
+    "lightning",
+    "sanctions",
+    "ofac",
+    "marine-weather",
+    "company-search",
+    "ai-agents"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "csv-parse": "^5.6.0",
+    "express": "^4.21.0",
+    "express-rate-limit": "^7.4.0",
+    "fast-xml-parser": "^5.5.8",
+    "helmet": "^8.0.0",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "bin": {
+    "velocibot-mcp": "src/mcp-server.js"
+  }
+}
