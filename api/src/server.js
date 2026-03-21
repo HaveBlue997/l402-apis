@@ -38,7 +38,16 @@ app.use(
   })
 );
 
-// Rate limiting
+// Rate limiting — skip for health/status/monitoring endpoints
+const rateLimitSkipPaths = new Set([
+  "/api/v1/health",
+  "/api/v1/pricing",
+  "/api/v1/sanctions/status",
+  "/api/v1/llm/models",
+  "/api/v1/company/jurisdictions",
+  "/api/v1/weather/aviation/stations",
+]);
+
 app.use(
   "/api/",
   rateLimit({
@@ -46,6 +55,7 @@ app.use(
     max: RATE_LIMIT_MAX,
     standardHeaders: true,
     legacyHeaders: false,
+    skip: (req) => rateLimitSkipPaths.has(req.path),
     message: {
       error: "Too many requests, please try again later",
       retry_after_ms: RATE_LIMIT_WINDOW,
