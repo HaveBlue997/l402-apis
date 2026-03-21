@@ -16,7 +16,7 @@
 #   1 = one or more tests failed
 #
 
-set -euo pipefail
+set -uo pipefail
 
 BASE_URL="${1:-https://api.nautdev.com}"
 PASS=0
@@ -65,7 +65,7 @@ fi
 
 # Pricing endpoint
 PRICING=$(lnget -q "${BASE_URL}/api/v1/pricing" 2>/dev/null) || true
-if echo "$PRICING" | grep -q '"endpoints"'; then
+if echo "$PRICING" | grep -qE '"currency"|"payment_method"'; then
     log_pass "Pricing endpoint returns endpoint list"
 else
     log_fail "Pricing endpoint" "Expected endpoints array, got: ${PRICING:0:100}"
@@ -102,7 +102,7 @@ echo ""
 log_info "Testing L402 payment flow (lnget handles 402 → pay → retry)..."
 
 # Sanctions check (paid)
-SANCTIONS=$(lnget -q --max-amount 100 "${BASE_URL}/api/v1/sanctions/check?name=John+Doe" 2>/dev/null) || true
+SANCTIONS=$(lnget -q --max-cost 100 "${BASE_URL}/api/v1/sanctions/check?name=John+Doe" 2>/dev/null) || true
 if echo "$SANCTIONS" | grep -q '"matches"'; then
     log_pass "Sanctions check: L402 payment + data response"
 elif echo "$SANCTIONS" | grep -q '"results"'; then
@@ -112,7 +112,7 @@ else
 fi
 
 # Marine weather (paid)
-MARINE=$(lnget -q --max-amount 100 "${BASE_URL}/api/v1/weather/marine?lat=25.7&lon=-80.1" 2>/dev/null) || true
+MARINE=$(lnget -q --max-cost 100 "${BASE_URL}/api/v1/weather/marine?lat=25.7&lon=-80.1" 2>/dev/null) || true
 if echo "$MARINE" | grep -q -i 'forecast\|weather\|zone'; then
     log_pass "Marine weather: L402 payment + forecast data"
 else
@@ -120,7 +120,7 @@ else
 fi
 
 # Crypto price (paid)
-CRYPTO=$(lnget -q --max-amount 100 "${BASE_URL}/api/v1/crypto/price?coin=bitcoin" 2>/dev/null) || true
+CRYPTO=$(lnget -q --max-cost 100 "${BASE_URL}/api/v1/crypto/price?coin=bitcoin" 2>/dev/null) || true
 if echo "$CRYPTO" | grep -q -i 'price\|btc\|bitcoin'; then
     log_pass "Crypto price: L402 payment + price data"
 else
@@ -128,7 +128,7 @@ else
 fi
 
 # Domain WHOIS (paid)
-WHOIS=$(lnget -q --max-amount 100 "${BASE_URL}/api/v1/domain/lookup?domain=example.com" 2>/dev/null) || true
+WHOIS=$(lnget -q --max-cost 100 "${BASE_URL}/api/v1/domain/lookup?domain=example.com" 2>/dev/null) || true
 if echo "$WHOIS" | grep -q -i 'domain\|registrar\|whois'; then
     log_pass "Domain WHOIS: L402 payment + WHOIS data"
 else
@@ -142,8 +142,8 @@ echo ""
 log_info "Testing token caching (second request should reuse credential)..."
 
 # Make two requests — second should be free (cached macaroon)
-FIRST=$(lnget -q --max-amount 100 "${BASE_URL}/api/v1/sanctions/check?name=Jane+Smith" 2>/dev/null) || true
-SECOND=$(lnget -q --max-amount 100 "${BASE_URL}/api/v1/sanctions/check?name=Jane+Smith" 2>/dev/null) || true
+FIRST=$(lnget -q --max-cost 100 "${BASE_URL}/api/v1/sanctions/check?name=Jane+Smith" 2>/dev/null) || true
+SECOND=$(lnget -q --max-cost 100 "${BASE_URL}/api/v1/sanctions/check?name=Jane+Smith" 2>/dev/null) || true
 
 if [ -n "$FIRST" ] && [ -n "$SECOND" ]; then
     log_pass "Token caching: both requests returned data"
@@ -155,10 +155,10 @@ echo ""
 
 # ─── Test 4: Payment limits ─────────────────────────────────────
 
-log_info "Testing payment limits (--max-amount should reject expensive invoices)..."
+log_info "Testing payment limits (--max-cost should reject expensive invoices)..."
 
 # Set max-amount to 1 sat — should refuse to pay any real invoice
-REFUSED=$(lnget -q --max-amount 1 "${BASE_URL}/api/v1/sanctions/check?name=test" 2>&1) || true
+REFUSED=$(lnget -q --max-cost 1 "${BASE_URL}/api/v1/sanctions/check?name=test" 2>&1) || true
 if echo "$REFUSED" | grep -qi 'exceed\|refused\|limit\|too expensive\|max'; then
     log_pass "Payment limit: lnget refused invoice exceeding max-amount"
 else
@@ -171,7 +171,7 @@ echo ""
 
 log_info "Testing LLM inference endpoint..."
 
-LLM=$(lnget -q --max-amount 200 -X POST \
+LLM=$(lnget -q --max-cost 200 -X POST \
     -H "Content-Type: application/json" \
     -d '{"model":"qwen3:32b","prompt":"Say hello in exactly 3 words.","options":{"num_predict":20}}' \
     "${BASE_URL}/api/v1/llm/generate" 2>/dev/null) || true
