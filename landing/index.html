@@ -156,6 +156,60 @@
 }</code></pre>
           </div>
         </div>
+        <!-- Aviation Weather -->
+        <div class="card">
+          <div class="card-icon">✈️</div>
+          <h4 class="card-title">Aviation Weather</h4>
+          <div class="card-price">5 sats <span class="card-usd">~$0.00005</span></div>
+          <p class="card-desc">METAR and TAF reports for any airport worldwide. Real-time conditions and forecasts for flight planning.</p>
+          <div class="card-endpoint">
+            <code>GET /api/v1/weather/aviation?station=&lt;ICAO&gt;</code>
+          </div>
+        </div>
+
+        <!-- Crypto Data -->
+        <div class="card">
+          <div class="card-icon">📊</div>
+          <h4 class="card-title">Crypto Market Data</h4>
+          <div class="card-price">5 sats <span class="card-usd">~$0.00005</span></div>
+          <p class="card-desc">Live cryptocurrency prices, market data, and exchange rates. Bitcoin, Ethereum, and major altcoins.</p>
+          <div class="card-endpoint">
+            <code>GET /api/v1/crypto/price?symbol=&lt;symbol&gt;</code>
+          </div>
+        </div>
+
+        <!-- Domain Intel -->
+        <div class="card">
+          <div class="card-icon">🔍</div>
+          <h4 class="card-title">Domain Intelligence</h4>
+          <div class="card-price">10 sats <span class="card-usd">~$0.0001</span></div>
+          <p class="card-desc">WHOIS lookups, domain availability, registrar info, expiration dates. Essential for due diligence.</p>
+          <div class="card-endpoint">
+            <code>GET /api/v1/domain/whois?domain=&lt;domain&gt;</code>
+          </div>
+        </div>
+
+        <!-- LLM Inference -->
+        <div class="card">
+          <div class="card-icon">🧠</div>
+          <h4 class="card-title">LLM Inference</h4>
+          <div class="card-price">50 sats <span class="card-usd">~$0.0005</span></div>
+          <p class="card-desc">Access 6 local LLM models — Llama, Qwen, DeepSeek, Mistral, Command-R, Devstral. Your prompts never leave our hardware.</p>
+          <div class="card-endpoint">
+            <code>POST /api/v1/llm/chat</code>
+          </div>
+        </div>
+
+        <!-- Predictions -->
+        <div class="card">
+          <div class="card-icon">🎯</div>
+          <h4 class="card-title">Prediction Markets</h4>
+          <div class="card-price">5 sats <span class="card-usd">~$0.00005</span></div>
+          <p class="card-desc">Prediction market data and probabilities. Track real-time sentiment on events and outcomes.</p>
+          <div class="card-endpoint">
+            <code>GET /api/v1/predictions</code>
+          </div>
+        </div>
       </div>
 
       <!-- MCP Skills -->
@@ -306,6 +360,36 @@
               <td class="price-sats">75 ⚡</td>
               <td class="price-usd">$0.0008</td>
               <td>US business entity search</td>
+            </tr>
+            <tr>
+              <td><code>/api/v1/weather/aviation</code></td>
+              <td class="price-sats">5 ⚡</td>
+              <td class="price-usd">$0.00005</td>
+              <td>METAR/TAF aviation weather</td>
+            </tr>
+            <tr>
+              <td><code>/api/v1/crypto/price</code></td>
+              <td class="price-sats">5 ⚡</td>
+              <td class="price-usd">$0.00005</td>
+              <td>Cryptocurrency market data</td>
+            </tr>
+            <tr>
+              <td><code>/api/v1/domain/whois</code></td>
+              <td class="price-sats">10 ⚡</td>
+              <td class="price-usd">$0.0001</td>
+              <td>Domain WHOIS intelligence</td>
+            </tr>
+            <tr>
+              <td><code>/api/v1/llm/chat</code></td>
+              <td class="price-sats">50 ⚡</td>
+              <td class="price-usd">$0.0005</td>
+              <td>LLM inference (6 models)</td>
+            </tr>
+            <tr>
+              <td><code>/api/v1/predictions</code></td>
+              <td class="price-sats">5 ⚡</td>
+              <td class="price-usd">$0.00005</td>
+              <td>Prediction market data</td>
             </tr>
           </tbody>
         </table>
