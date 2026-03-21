@@ -122,6 +122,7 @@ app.use("/api/v1/weather/aviation", aviationRouter);
 
 // --- Landing page (static) ---
 app.use("/landing", express.static(landingPath));
+app.use(express.static(landingPath)); // Serve static assets (style.css, main.js) from root
 app.get("/", (_req, res) => res.sendFile(join(landingPath, "index.html")));
 
 // --- 404 handler ---

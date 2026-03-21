@@ -28,6 +28,7 @@ const FREE_PATTERNS = [
   /^\/api\/v1\/weather\/aviation\/stations$/,
   /^\/admin\//,
   /^\/api\/v1\/admin\//,
+  /\.(css|js|png|jpg|jpeg|gif|svg|ico|woff2?|ttf|eot|map)$/,  // Static assets
 ];
 
 function isFree(url) {
