@@ -185,6 +185,28 @@ code {
   border-color: rgba(255, 153, 0, 0.3);
 }
 
+.tag-live {
+  background: rgba(0, 200, 83, 0.1);
+  color: #00c853;
+  border-color: rgba(0, 200, 83, 0.3);
+}
+
+.footer-links {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.footer-links a {
+  color: var(--text-secondary, #aaa);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--accent, #00c853);
+}
+
 /* ===== Hero ===== */
 .hero {
   position: relative;
