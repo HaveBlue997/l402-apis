@@ -39,13 +39,14 @@ app.use(
 );
 
 // Rate limiting — skip for health/status/monitoring endpoints
+// NOTE: when mounted on "/api/", req.path is relative (e.g. "/v1/health" not "/api/v1/health")
 const rateLimitSkipPaths = new Set([
-  "/api/v1/health",
-  "/api/v1/pricing",
-  "/api/v1/sanctions/status",
-  "/api/v1/llm/models",
-  "/api/v1/company/jurisdictions",
-  "/api/v1/weather/aviation/stations",
+  "/v1/health",
+  "/v1/pricing",
+  "/v1/sanctions/status",
+  "/v1/llm/models",
+  "/v1/company/jurisdictions",
+  "/v1/weather/aviation/stations",
 ]);
 
 app.use(
