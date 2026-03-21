@@ -1,3 +1,5 @@
 {"timestamp":"2026-03-21T16:04:10.580Z","ip_hash":"12ca17b49af22894","method":"GET","path":"/models","model":"unknown","stream":false,"status":200,"response_ms":17,"tokens":null,"pricing":null,"flagged":false}
 {"timestamp":"2026-03-21T16:04:24.503Z","ip_hash":"12ca17b49af22894","method":"POST","path":"/generate","model":"qwen3:32b","stream":false,"status":200,"response_ms":13877,"tokens":{"prompt":15,"completion":10,"total":25},"pricing":{"tier":"medium","total_sats":3},"flagged":false}
 {"timestamp":"2026-03-21T16:05:39.348Z","ip_hash":"12ca17b49af22894","method":"GET","path":"/models","model":"unknown","stream":false,"status":200,"response_ms":11,"tokens":null,"pricing":null,"flagged":false}
+{"timestamp":"2026-03-21T16:06:56.212Z","ip_hash":"12ca17b49af22894","method":"GET","path":"/models","model":"unknown","stream":false,"status":200,"response_ms":5,"tokens":null,"pricing":null,"flagged":false}
+{"timestamp":"2026-03-21T16:12:13.715Z","ip_hash":"12ca17b49af22894","method":"GET","path":"/models","model":"unknown","stream":false,"status":200,"response_ms":4,"tokens":null,"pricing":null,"flagged":false}
