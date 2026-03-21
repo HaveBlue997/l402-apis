@@ -112,7 +112,7 @@ else
 fi
 
 # Marine weather (paid)
-MARINE=$(lnget -q --max-amount 100 "${BASE_URL}/api/v1/weather/marine?zone=GMZ335" 2>/dev/null) || true
+MARINE=$(lnget -q --max-amount 100 "${BASE_URL}/api/v1/weather/marine?lat=25.7&lon=-80.1" 2>/dev/null) || true
 if echo "$MARINE" | grep -q -i 'forecast\|weather\|zone'; then
     log_pass "Marine weather: L402 payment + forecast data"
 else
@@ -120,7 +120,7 @@ else
 fi
 
 # Crypto price (paid)
-CRYPTO=$(lnget -q --max-amount 100 "${BASE_URL}/api/v1/crypto/price?symbol=BTC" 2>/dev/null) || true
+CRYPTO=$(lnget -q --max-amount 100 "${BASE_URL}/api/v1/crypto/price?coin=bitcoin" 2>/dev/null) || true
 if echo "$CRYPTO" | grep -q -i 'price\|btc\|bitcoin'; then
     log_pass "Crypto price: L402 payment + price data"
 else
@@ -128,7 +128,7 @@ else
 fi
 
 # Domain WHOIS (paid)
-WHOIS=$(lnget -q --max-amount 100 "${BASE_URL}/api/v1/domain/whois?domain=example.com" 2>/dev/null) || true
+WHOIS=$(lnget -q --max-amount 100 "${BASE_URL}/api/v1/domain/lookup?domain=example.com" 2>/dev/null) || true
 if echo "$WHOIS" | grep -q -i 'domain\|registrar\|whois'; then
     log_pass "Domain WHOIS: L402 payment + WHOIS data"
 else
@@ -173,8 +173,8 @@ log_info "Testing LLM inference endpoint..."
 
 LLM=$(lnget -q --max-amount 200 -X POST \
     -H "Content-Type: application/json" \
-    -d '{"model":"llama3.1:latest","prompt":"Say hello in exactly 3 words.","max_tokens":20}' \
-    "${BASE_URL}/api/v1/llm/chat" 2>/dev/null) || true
+    -d '{"model":"qwen3:32b","prompt":"Say hello in exactly 3 words.","options":{"num_predict":20}}' \
+    "${BASE_URL}/api/v1/llm/generate" 2>/dev/null) || true
 
 if echo "$LLM" | grep -q -i 'response\|content\|message\|hello'; then
     log_pass "LLM inference: L402 payment + model response"
