@@ -163,7 +163,7 @@
           <div class="card-price">5 sats <span class="card-usd">~$0.00005</span></div>
           <p class="card-desc">METAR and TAF reports for any airport worldwide. Real-time conditions and forecasts for flight planning.</p>
           <div class="card-endpoint">
-            <code>GET /api/v1/weather/aviation?station=&lt;ICAO&gt;</code>
+            <code>GET /api/v1/weather/aviation/metar?station=&lt;ICAO&gt;</code>
           </div>
         </div>
 
@@ -185,7 +185,7 @@
           <div class="card-price">10 sats <span class="card-usd">~$0.0001</span></div>
           <p class="card-desc">WHOIS lookups, domain availability, registrar info, expiration dates. Essential for due diligence.</p>
           <div class="card-endpoint">
-            <code>GET /api/v1/domain/whois?domain=&lt;domain&gt;</code>
+            <code>GET /api/v1/domain/lookup?domain=&lt;domain&gt;</code>
           </div>
         </div>
 
@@ -374,7 +374,7 @@
               <td>Cryptocurrency market data</td>
             </tr>
             <tr>
-              <td><code>/api/v1/domain/whois</code></td>
+              <td><code>/api/v1/domain/lookup</code></td>
               <td class="price-sats">10 ⚡</td>
               <td class="price-usd">$0.0001</td>
               <td>Domain WHOIS intelligence</td>
