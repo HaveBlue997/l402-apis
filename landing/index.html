@@ -11,8 +11,8 @@
   <meta property="og:title" content="Velocibot Agent Services">
   <meta property="og:description" content="Data APIs and tools for AI agents. Pay per request with Lightning. No accounts needed.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://velocibot.services">
-  <meta property="og:image" content="https://velocibot.services/og-image.png">
+  <meta property="og:url" content="https://nautdev.com">
+  <meta property="og:image" content="https://nautdev.com/og-image.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -57,7 +57,7 @@
           <span class="code-title">Try it — get a Lightning invoice</span>
         </div>
         <pre><code><span class="code-comment"># Make a request, receive a 402 + Lightning invoice</span>
-<span class="code-prompt">$</span> curl -s https://api.velocibot.services/api/v1/sanctions/check?name=John+Doe
+<span class="code-prompt">$</span> curl -s https://nautdev.com/api/v1/sanctions/check?name=John+Doe
 
 <span class="code-comment"># Response: HTTP 402 Payment Required</span>
 {
@@ -77,7 +77,7 @@
 
       <!-- L402 APIs -->
       <h3 class="subsection-title">L402 Data APIs <span class="tag">pay-per-request via Lightning</span></h3>
-      <p class="endpoint-base">Endpoint: <code>https://api.velocibot.services</code> <span class="tag tag-soon">coming soon</span></p>
+      <p class="endpoint-base">Endpoint: <code>https://nautdev.com</code> <span class="tag tag-soon">coming soon</span></p>
 
       <div class="cards">
         <!-- Sanctions -->
@@ -95,7 +95,7 @@
               <span class="code-title">Example</span>
             </div>
             <pre><code><span class="code-prompt">$</span> curl -H "Authorization: L402 &lt;macaroon&gt;:&lt;preimage&gt;" \
-  "https://api.velocibot.services/api/v1/sanctions/check?name=John+Doe"
+  "https://nautdev.com/api/v1/sanctions/check?name=John+Doe"
 
 {
   <span class="code-key">"matches"</span>: [],
@@ -120,7 +120,7 @@
               <span class="code-title">Example</span>
             </div>
             <pre><code><span class="code-prompt">$</span> curl -H "Authorization: L402 &lt;macaroon&gt;:&lt;preimage&gt;" \
-  "https://api.velocibot.services/api/v1/weather/marine?lat=18.4&lon=-64.6"
+  "https://nautdev.com/api/v1/weather/marine?lat=18.4&lon=-64.6"
 
 {
   <span class="code-key">"location"</span>: <span class="code-string">"Virgin Islands Waters"</span>,
@@ -146,7 +146,7 @@
               <span class="code-title">Example</span>
             </div>
             <pre><code><span class="code-prompt">$</span> curl -H "Authorization: L402 &lt;macaroon&gt;:&lt;preimage&gt;" \
-  "https://api.velocibot.services/api/v1/company/search?state=DE&name=Acme"
+  "https://nautdev.com/api/v1/company/search?state=DE&name=Acme"
 
 {
   <span class="code-key">"results"</span>: [
@@ -234,7 +234,7 @@
           <span class="code-title">Full agent integration flow</span>
         </div>
         <pre><code><span class="code-comment"># Step 1-2: Make initial request</span>
-<span class="code-prompt">$</span> curl -si https://api.velocibot.services/api/v1/sanctions/check?name=John+Doe
+<span class="code-prompt">$</span> curl -si https://nautdev.com/api/v1/sanctions/check?name=John+Doe
 <span class="code-comment"># → HTTP/1.1 402 Payment Required</span>
 <span class="code-comment"># → Www-Authenticate: L402 macaroon="...", invoice="lnbc1000n1p..."</span>
 
@@ -244,7 +244,7 @@
 
 <span class="code-comment"># Step 4-5: Re-send with L402 credentials</span>
 <span class="code-prompt">$</span> curl -H <span class="code-string">"Authorization: L402 &lt;macaroon&gt;:&lt;preimage&gt;"</span> \
-  https://api.velocibot.services/api/v1/sanctions/check?name=John+Doe
+  https://nautdev.com/api/v1/sanctions/check?name=John+Doe
 <span class="code-comment"># → HTTP/1.1 200 OK</span>
 <span class="code-comment"># → { "matches": [], "status": "clear" }</span></code></pre>
       </div>
@@ -345,7 +345,7 @@ client = L402Client(
 
 <span class="code-comment"># Just make the request — payment is handled transparently</span>
 response = client.get(
-    <span class="code-string">"https://api.velocibot.services/api/v1/sanctions/check"</span>,
+    <span class="code-string">"https://nautdev.com/api/v1/sanctions/check"</span>,
     params={<span class="code-string">"name"</span>: <span class="code-string">"John Doe"</span>, <span class="code-string">"country"</span>: <span class="code-string">"US"</span>}
 )
 
