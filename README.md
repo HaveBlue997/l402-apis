@@ -76,16 +76,18 @@ curl -H "Authorization: L402 <macaroon>:<preimage>" \
 
 We provide [Model Context Protocol](https://modelcontextprotocol.io/) packages so AI agents can discover and use these APIs natively:
 
-- `@velocibot/mcp-sanctions-check` — Sanctions screening tool
-- `@velocibot/mcp-marine-weather` — Marine weather forecasts
-- `@velocibot/mcp-charter-planner` — Charter trip planning
-- `@blue-trianon/mcp-aviation-weather` — Aviation weather
-- `@blue-trianon/mcp-company-search` — Company lookup
-- `@blue-trianon/mcp-crypto-data` — Crypto price data
-- `@blue-trianon/mcp-domain-intel` — Domain intelligence
-- `@blue-trianon/mcp-llm-inference` — LLM model access
+```bash
+npm i @vbotholemu/mcp-sanctions-check    # OFAC/EU/UK/UN sanctions screening
+npm i @vbotholemu/mcp-marine-weather     # NOAA marine weather forecasts
+npm i @vbotholemu/mcp-charter-planner    # BVI sailing charter planning
+npm i @vbotholemu/mcp-aviation-weather   # METAR/TAF aviation weather
+npm i @vbotholemu/mcp-company-search     # Company registry lookup
+npm i @vbotholemu/mcp-crypto-data        # Cryptocurrency market data
+npm i @vbotholemu/mcp-domain-intel       # Domain WHOIS/availability
+npm i @vbotholemu/mcp-llm-inference      # LLM chat/text generation
+```
 
-*(npm publish pending — check back soon)*
+All published on [npmjs.com](https://www.npmjs.com/search?q=%40vbotholemu) — MIT licensed, TypeScript with zod validation.
 
 ## Security & Trust
 
