@@ -14,11 +14,17 @@ const GATEWAY_PORT = parseInt(process.env.GATEWAY_PORT || "9080", 10);
 const API_SERVER = { host: "127.0.0.1", port: 9090 };
 const APERTURE = { host: "127.0.0.1", port: 8443 };
 
+// Service key for internal callers (e.g., promo proxy) to bypass L402 payment.
+// Set via GATEWAY_SERVICE_KEY env var. When a request includes a matching
+// X-Service-Key header, it routes directly to the API server, skipping Aperture.
+const SERVICE_KEY = process.env.GATEWAY_SERVICE_KEY || "";
+
 // Endpoints that should be free (no L402 payment required)
 const FREE_PATTERNS = [
   /^\/$/,
   /^\/landing/,
   /^\/docs/,
+  /^\/promo$/,
   /^\/openapi\.json$/,
   /^\/api\/v1\/health$/,
   /^\/api\/v1\/pricing$/,
@@ -67,8 +73,17 @@ function proxyRequest(req, res, target, useTLS) {
   req.pipe(proxyReq, { end: true });
 }
 
+function hasValidServiceKey(req) {
+  if (!SERVICE_KEY) return false;
+  const key = req.headers["x-service-key"];
+  return key === SERVICE_KEY;
+}
+
 const server = http.createServer((req, res) => {
-  if (isFree(req.url)) {
+  if (hasValidServiceKey(req)) {
+    // Authenticated internal caller → direct to API server, skip L402
+    proxyRequest(req, res, API_SERVER, false);
+  } else if (isFree(req.url)) {
     // Free → direct to API server
     proxyRequest(req, res, API_SERVER, false);
   } else {
@@ -81,4 +96,5 @@ server.listen(GATEWAY_PORT, "127.0.0.1", () => {
   console.log(`[gateway] L402 Gateway listening on 127.0.0.1:${GATEWAY_PORT} (localhost only)`);
   console.log(`[gateway] Free endpoints → localhost:${API_SERVER.port}`);
   console.log(`[gateway] Paid endpoints → localhost:${APERTURE.port} (Aperture/L402)`);
+  console.log(`[gateway] Service key bypass: ${SERVICE_KEY ? "enabled" : "disabled (set GATEWAY_SERVICE_KEY to enable)"}`);
 });
