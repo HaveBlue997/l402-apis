@@ -185,3 +185,6 @@
 {"timestamp":"2026-03-22T12:45:09.774Z","ip_hash":"12ca17b49af22894","method":"GET","path":"/models","model":"unknown","stream":false,"status":200,"response_ms":26,"tokens":null,"pricing":null,"flagged":false}
 {"timestamp":"2026-03-22T14:42:48.844Z","ip_hash":"12ca17b49af22894","method":"GET","path":"/models","model":"unknown","stream":false,"status":200,"response_ms":9,"tokens":null,"pricing":null,"flagged":false}
 {"timestamp":"2026-03-22T16:42:50.535Z","ip_hash":"12ca17b49af22894","method":"GET","path":"/models","model":"unknown","stream":false,"status":200,"response_ms":14,"tokens":null,"pricing":null,"flagged":false}
+{"timestamp":"2026-03-22T20:28:27.137Z","ip_hash":"12ca17b49af22894","method":"GET","path":"/models","model":"unknown","stream":false,"status":200,"response_ms":4,"tokens":null,"pricing":null,"flagged":false}
+{"timestamp":"2026-03-22T22:28:24.300Z","ip_hash":"12ca17b49af22894","method":"GET","path":"/models","model":"unknown","stream":false,"status":200,"response_ms":10,"tokens":null,"pricing":null,"flagged":false}
+{"timestamp":"2026-03-22T23:31:32.211Z","ip_hash":"12ca17b49af22894","method":"GET","path":"/models","model":"unknown","stream":false,"status":200,"response_ms":46,"tokens":null,"pricing":null,"flagged":false}

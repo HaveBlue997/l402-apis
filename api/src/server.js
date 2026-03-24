@@ -131,9 +131,60 @@ app.use("/api/v1/pricing", pricingRouter);
 app.use("/api/v1/domain", whoisRouter);
 app.use("/api/v1/weather/aviation", aviationRouter);
 
+// --- Admin endpoints ---
+app.get("/admin/registrations", async (req, res) => {
+  try {
+    const { exec } = await import("node:child_process");
+    const { promisify } = await import("node:util");
+    const execAsync = promisify(exec);
+    
+    // Query DynamoDB directly using velocibot-ro profile
+    const { stdout } = await execAsync(`
+      AWS_PROFILE=velocibot-ro aws dynamodb scan \
+        --table-name openclaw-apipromo-bots-dev \
+        --select COUNT \
+        --output json
+    `);
+    
+    const countData = JSON.parse(stdout);
+    
+    // Get sample registrations
+    const { stdout: sampleData } = await execAsync(`
+      AWS_PROFILE=velocibot-ro aws dynamodb scan \
+        --table-name openclaw-apipromo-bots-dev \
+        --limit 10 \
+        --output json
+    `);
+    
+    const sampleResult = JSON.parse(sampleData);
+    const sampleBots = sampleResult.Items?.map(item => ({
+      bot_id: item.bot_id?.S,
+      created_at: item.created_at?.S || null,
+      credits: parseInt(item.credits?.N || "0"),
+      total_api_calls: parseInt(item.total_api_calls?.N || "0"),
+      ip_address: item.ip_address?.S || null
+    })) || [];
+    
+    res.json({
+      total_registrations: countData.Count || 0,
+      scanned_items: countData.ScannedCount || 0,
+      sample_bots: sampleBots,
+      timestamp: new Date().toISOString(),
+      table_name: "openclaw-apipromo-bots-dev"
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: "Failed to fetch registration stats",
+      message: error.message,
+      docs: "Contact ops team if this persists"
+    });
+  }
+});
+
 // --- Landing page (static) ---
 app.use("/landing", express.static(landingPath));
 app.use(express.static(landingPath)); // Serve static assets (style.css, main.js) from root
+app.get("/promo", (_req, res) => res.sendFile(join(landingPath, "promo.html")));
 app.get("/", (_req, res) => res.sendFile(join(landingPath, "index.html")));
 
 // --- 404 handler ---
