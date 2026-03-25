@@ -22,3 +22,10 @@
 {"timestamp":"2026-03-24T14:16:32.260Z","ip_hash":"12ca17b49af22894","method":"GET","path":"/models","model":"unknown","stream":false,"status":200,"response_ms":32,"tokens":null,"pricing":null,"flagged":false}
 {"timestamp":"2026-03-24T14:16:32.618Z","ip_hash":"12ca17b49af22894","method":"GET","path":"/models","model":"unknown","stream":false,"status":200,"response_ms":26,"tokens":null,"pricing":null,"flagged":false}
 {"timestamp":"2026-03-24T14:21:09.733Z","ip_hash":"12ca17b49af22894","method":"GET","path":"/models","model":"unknown","stream":false,"status":200,"response_ms":6,"tokens":null,"pricing":null,"flagged":false}
+{"timestamp":"2026-03-24T15:28:03.747Z","ip_hash":"12ca17b49af22894","method":"GET","path":"/models","model":"unknown","stream":false,"status":200,"response_ms":6,"tokens":null,"pricing":null,"flagged":false}
+{"timestamp":"2026-03-24T16:27:59.765Z","ip_hash":"12ca17b49af22894","method":"GET","path":"/models","model":"unknown","stream":false,"status":200,"response_ms":5,"tokens":null,"pricing":null,"flagged":false}
+{"timestamp":"2026-03-24T16:49:22.911Z","ip_hash":"12ca17b49af22894","method":"GET","path":"/models","model":"unknown","stream":false,"status":200,"response_ms":24,"tokens":null,"pricing":null,"flagged":false}
+{"timestamp":"2026-03-24T17:29:13.358Z","ip_hash":"12ca17b49af22894","method":"GET","path":"/models","model":"unknown","stream":false,"status":200,"response_ms":4,"tokens":null,"pricing":null,"flagged":false}
+{"timestamp":"2026-03-24T18:29:07.825Z","ip_hash":"12ca17b49af22894","method":"GET","path":"/models","model":"unknown","stream":false,"status":200,"response_ms":4,"tokens":null,"pricing":null,"flagged":false}
+{"timestamp":"2026-03-24T19:10:08.268Z","ip_hash":"12ca17b49af22894","method":"GET","path":"/models","model":"unknown","stream":false,"status":200,"response_ms":33,"tokens":null,"pricing":null,"flagged":false}
+{"timestamp":"2026-03-24T19:10:17.584Z","ip_hash":"12ca17b49af22894","method":"GET","path":"/models","model":"unknown","stream":false,"status":200,"response_ms":36,"tokens":null,"pricing":null,"flagged":false}
